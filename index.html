@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李鸿佑 · 个人主页</title>
+<meta name="description" content="李鸿佑的个人主页 — 大连海事大学软件工程专业，专注 AI / RAG / 全栈开发">
+<style>
+  /* ========== 基础变量 ========== */
+  :root {
+    --bg: #fdfdfb;
+    --bg-soft: #f4f7f4;
+    --text: #1f2a24;
+    --text-soft: #5f6f66;
+    --accent: #2f9e6e;          /* 清新绿 */
+    --accent-soft: #e3f3eb;
+    --accent2: #5aa9e6;         /* 天空蓝点缀 */
+    --card: #ffffff;
+    --border: #e6ece8;
+    --radius: 16px;
+    --shadow: 0 6px 24px rgba(47, 158, 110, .08);
+    --font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section { padding: 96px 0; }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    margin-bottom: 8px;
+  }
+
+  .section-sub {
+    color: var(--text-soft);
+    margin-bottom: 48px;
+  }
+
+  /* ========== 导航栏 ========== */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(253, 253, 251, .85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, box-shadow .3s;
+  }
+
+  header.scrolled {
+    border-bottom-color: var(--border);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .04);
+  }
+
+  nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: .04em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: .95rem;
+  }
+
+  .nav-links a {
+    color: var(--text-soft);
+    transition: color .2s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width .25s;
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ========== Hero ========== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    background:
+      radial-gradient(600px 300px at 85% 15%, rgba(90, 169, 230, .12), transparent 60%),
+      radial-gradient(700px 400px at 10% 90%, rgba(47, 158, 110, .12), transparent 60%),
+      var(--bg);
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    width: 100%;
+  }
+
+  .hero-text { flex: 1; }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: .85rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.2;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .highlight { color: var(--accent); }
+
+  .hero p.lead {
+    font-size: 1.15rem;
+    color: var(--text-soft);
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-size: .95rem;
+    font-weight: 600;
+    transition: transform .2s, box-shadow .2s, background .2s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(47, 158, 110, .28);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(47, 158, 110, .34);
+  }
+
+  .btn-outline {
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    background: var(--card);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .avatar-wrap { flex-shrink: 0; }
+
+  .avatar {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: var(--shadow);
+    border: 6px solid #fff;
+  }
+
+  /* ========== 关于我 ========== */
+  #about { background: var(--bg-soft); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .about-text p { color: var(--text-soft); margin-bottom: 16px; }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .info-card h3 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: .92rem;
+  }
+
+  .info-item:last-child { border-bottom: none; }
+  .info-item span:first-child { color: var(--text-soft); flex-shrink: 0; }
+  .info-item a { color: var(--accent); }
+  .info-item a:hover { text-decoration: underline; }
+
+  /* ========== 技能 ========== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: transform .25s, box-shadow .25s;
+  }
+
+  .skill-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+  }
+
+  .skill-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .skill-card p { font-size: .92rem; color: var(--text-soft); margin-bottom: 14px; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .tag {
+    font-size: .78rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+
+  /* ========== 项目 ========== */
+  #projects { background: var(--bg-soft); }
+
+  .project-card {
+    display: flex;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 28px;
+    transition: transform .25s, box-shadow .25s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+
+  .project-cover {
+    flex-shrink: 0;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 3rem;
+    padding: 24px;
+  }
+
+  .project-card:nth-child(3n+1) .project-cover { background: linear-gradient(135deg, #e3f3eb, #d3ecdf); }
+  .project-card:nth-child(3n+2) .project-cover { background: linear-gradient(135deg, #e2f0fb, #d2e7f7); }
+  .project-card:nth-child(3n+3) .project-cover { background: linear-gradient(135deg, #fdf3e0, #fbe8c8); }
+
+  .project-date {
+    font-size: .8rem;
+    color: var(--text-soft);
+    background: rgba(255, 255, 255, .75);
+    padding: 3px 12px;
+    border-radius: 999px;
+  }
+
+  .project-body { padding: 28px; flex: 1; }
+
+  .project-body h3 { font-size: 1.15rem; margin-bottom: 4px; }
+
+  .project-role {
+    font-size: .82rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .project-body > p { font-size: .93rem; color: var(--text-soft); margin-bottom: 12px; }
+
+  .project-highlights {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  .project-highlights li {
+    font-size: .9rem;
+    color: var(--text-soft);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .project-highlights li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .88rem;
+    font-weight: 600;
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    padding: 8px 18px;
+    border-radius: 999px;
+    transition: border-color .2s, color .2s, transform .2s;
+  }
+
+  .project-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* ========== 荣誉奖项 ========== */
+  .awards-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .award-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    transition: transform .2s, box-shadow .2s;
+  }
+
+  .award-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+
+  .award-medal { font-size: 1.6rem; flex-shrink: 0; }
+
+  .award-info { flex: 1; }
+  .award-info h4 { font-size: .95rem; font-weight: 600; }
+  .award-info span { font-size: .82rem; color: var(--accent); font-weight: 600; }
+  .award-year {
+    font-size: .82rem;
+    color: var(--text-soft);
+    flex-shrink: 0;
+  }
+
+  /* ========== 联系方式 ========== */
+  .contact-box {
+    background: linear-gradient(135deg, #eaf7f1, #e6f1fb);
+    border-radius: 24px;
+    padding: 64px 48px;
+    text-align: center;
+  }
+
+  .contact-box h2 { font-size: 2rem; margin-bottom: 12px; }
+  .contact-box > p { color: var(--text-soft); margin-bottom: 32px; }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: .95rem;
+    transition: transform .2s, border-color .2s, color .2s;
+  }
+
+  .contact-link:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ========== 页脚 ========== */
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    color: var(--text-soft);
+    font-size: .85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a { color: var(--accent); }
+  footer a:hover { text-decoration: underline; }
+
+  /* ========== 滚动淡入动画 ========== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ========== 响应式 ========== */
+  @media (max-width: 860px) {
+    section { padding: 64px 0; }
+    .hero-inner { flex-direction: column-reverse; text-align: center; gap: 40px; }
+    .hero p.lead { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .project-card { flex-direction: column; }
+    .project-cover { width: 100%; padding: 36px; }
+    .awards-list { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== 导航栏 ========== -->
+<header id="header">
+  <nav>
+    <div class="logo">PeiChen.</div>
+    <div class="nav-links">
+      <a href="#home">首页</a>
+      <a href="#about">关于我</a>
+      <a href="#skills">技能</a>
+      <a href="#projects">项目</a>
+      <a href="#awards">荣誉</a>
+      <a href="#contact">联系我</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ========== Hero ========== -->
+<section class="hero" id="home">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <span class="hero-badge">👋 你好，欢迎来到我的主页</span>
+      <br>
+      <span class="hero-badge" style="background:#e2f0fb;color:#3a7fbf">🎓 已保研至南京航空航天大学</span>
+      <h1>我是<span class="highlight">李鸿佑</span>，<br>一名热爱 AI 的开发者</h1>
+      <p class="lead">
+        大连海事大学软件工程专业大四在读，已保研至南京航空航天大学，专注 RAG / LLM 应用与全栈开发。
+        喜欢把有趣的想法变成真实的项目，欢迎了解我的作品！
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">查看我的项目</a>
+        <a href="mailto:peichen1215@dlmu.edu.cn" class="btn btn-outline">📧 邮件联系我</a>
+      </div>
+    </div>
+    <div class="avatar-wrap">
+      <!-- 有证件照的话可替换为：<img src="photo.jpg" class="avatar" style="object-fit:cover" alt="头像"> -->
+      <div class="avatar">李</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 关于我 ========== -->
+<section id="about">
+  <div class="container">
+    <h2 class="section-title reveal">关于我</h2>
+    <p class="section-sub reveal">About Me</p>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          你好！我是李鸿佑，大连海事大学（211）软件工程专业大四学生，专业排名 10/89（前 15%），已保研至南京航空航天大学。
+          主要方向是 AI 应用开发——RAG 系统、多智能体、深度学习，同时也具备扎实的全栈 Web 开发能力。
+        </p>
+        <p>
+          我独立设计过面向企业知识库的 RAG 安全中间件「天盾 RAGShield」，
+          参与过基于深度学习时序模型的学生行为分析系统，也和团队一起打造了
+          多智能体个性化学习系统「智学蜂巢 EduHive」（中国软件杯参赛作品）。
+        </p>
+        <p>
+          竞赛方面，我获得过 ICPC 邀请赛铜奖、AIC 全球校园人工智能大赛全国二等奖等多项国家级奖项。
+          相信持续学习和动手实践是成长最快的路径，期待与志同道合的朋友交流合作！
+        </p>
+      </div>
+      <div class="info-card reveal">
+        <h3>📌 基本信息</h3>
+        <div class="info-item"><span>姓名</span><span>李鸿佑</span></div>
+        <div class="info-item"><span>学校</span><span>大连海事大学（211）</span></div>
+        <div class="info-item"><span>专业</span><span>软件工程 · 大四</span></div>
+        <div class="info-item"><span>排名</span><span>10 / 89（前 15%）</span></div>
+        <div class="info-item"><span>保研去向</span><span>南京航空航天大学</span></div>
+        <div class="info-item"><span>邮箱</span><a href="mailto:peichen1215@dlmu.edu.cn">peichen1215@dlmu.edu.cn</a></div>
+        <div class="info-item"><span>GitHub</span><a href="https://github.com/PeiChen1215" target="_blank">@PeiChen1215</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 技能 ========== -->
+<section id="skills">
+  <div class="container">
+    <h2 class="section-title reveal">专业技能</h2>
+    <p class="section-sub reveal">Skills</p>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <h3>💻 编程与算法</h3>
+        <p>熟悉 Python、C++、TypeScript，ICPC 邀请赛铜奖，具备扎实的数据结构与算法功底。</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">C++</span><span class="tag">TypeScript</span><span class="tag">ICPC 铜奖</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>🧠 AI / 机器学习</h3>
+        <p>熟悉 PyTorch、Transformer、XGBoost，具备深度学习模型训练、特征工程与评估的完整能力。</p>
+        <div class="tags">
+          <span class="tag">PyTorch</span><span class="tag">XGBoost</span><span class="tag">UMAP</span><span class="tag">时序建模</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>🤖 RAG / 大模型应用</h3>
+        <p>参与 RAG 安全中间件、多智能体系统、知识图谱构建与检索增强应用的开发。</p>
+        <div class="tags">
+          <span class="tag">RAG</span><span class="tag">多智能体</span><span class="tag">Neo4j</span><span class="tag">DeepSeek API</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>🛠️ 工程与全栈</h3>
+        <p>具备全栈 Web 开发、前后端联调、ROS 节点开发与实车调试能力，重视技术文档撰写。</p>
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">ROS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 项目 ========== -->
+<section id="projects">
+  <div class="container">
+    <h2 class="section-title reveal">项目经历</h2>
+    <p class="section-sub reveal">Projects</p>
+
+    <!-- 项目 1：RAGShield -->
+    <div class="project-card reveal">
+      <div class="project-cover">
+        <span>🛡️</span>
+        <span class="project-date">2026.04 – 2026.06</span>
+      </div>
+      <div class="project-body">
+        <h3>天盾 RAGShield — RAG 知识库安全防线</h3>
+        <div class="project-role">独立开发 · IADRR 七层纵深防御架构</div>
+        <p>面向企业级 RAG 系统的安全威胁，设计并实现 IADRR（智能自适应深度检索与响应）七层纵深防御架构。</p>
+        <ul class="project-highlights">
+          <li>首创意图驱动的动态风险路由引擎，支持 4 类查询动态检测</li>
+          <li>语义向量检索 + 规则匹配双路融合检测，实现相关性隔离架构</li>
+          <li>攻击检出率 92%、误报率 4%、F1-0.94、AUC-0.97，P95 延迟 145ms</li>
+        </ul>
+        <div class="project-footer">
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">ChromaDB</span><span class="tag">Streamlit</span>
+          </div>
+          <a class="project-link" href="https://github.com/PeiChen1215/RAGShield" target="_blank">🐙 GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目 2：S2P2 学生行为分析 -->
+    <div class="project-card reveal">
+      <div class="project-cover">
+        <span>📊</span>
+        <span class="project-date">2026.03 – 2026.05</span>
+      </div>
+      <div class="project-body">
+        <h3>S2P2 — 学生行为分析与风险预测系统</h3>
+        <div class="project-role">核心开发 · 深度学习时序模型</div>
+        <p>基于多源校园行为数据（图书馆、跑步打卡、作业、考试等），利用 S2P2 时序模型构建学业风险预警系统。</p>
+        <ul class="project-highlights">
+          <li>从 277 万+ 事件记录提取 256 维学业状态表征，构建 155 维特征工程</li>
+          <li>严格时间切分避免数据泄露，XGBoost 风险预测 + UMAP/KMeans 行为轨迹聚类</li>
+          <li>成果：AUC-ROC 0.985，准确率 92.0%，Macro F1-0.861</li>
+        </ul>
+        <div class="project-footer">
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">XGBoost</span><span class="tag">React</span>
+          </div>
+          <a class="project-link" href="https://github.com/PeiChen1215/FwwbDemo" target="_blank">🐙 GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目 3：EduHive 智学蜂巢 -->
+    <div class="project-card reveal">
+      <div class="project-cover">
+        <span>🐝</span>
+        <span class="project-date">2026.05 – 2026.07</span>
+      </div>
+      <div class="project-body">
+        <h3>智学蜂巢 EduHive — 多智能体个性化学习系统</h3>
+        <div class="project-role">核心开发 · 第十五届中国软件杯大赛 A 组参赛作品</div>
+        <p>面向 Python 程序设计课程，融合大模型、知识图谱与多智能体编排的个性化学习系统。</p>
+        <ul class="project-highlights">
+          <li>设计 5 角色分层 Agent 架构，通过统一消息总线实现多智能体协作</li>
+          <li>实现 Society of Mind 辩论议会审核机制，四视角 Prompt 议会投票审核</li>
+          <li>Neo4j 知识图谱硬约束 + AST 校验防超纲，认知风格自适应渲染引擎</li>
+        </ul>
+        <div class="project-footer">
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">Neo4j</span><span class="tag">Docker</span>
+          </div>
+          <a class="project-link" href="https://github.com/PeiChen1215/RJB_demo" target="_blank">🐙 GitHub</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== 荣誉奖项 ========== -->
+<section id="awards">
+  <div class="container">
+    <h2 class="section-title reveal">荣誉奖项</h2>
+    <p class="section-sub reveal">Honors & Awards</p>
+    <div class="awards-list">
+      <div class="award-item reveal">
+        <span class="award-medal">🏆</span>
+        <div class="award-info">
+          <h4>ICPC 国际大学生程序设计竞赛</h4>
+          <span>铜奖</span>
+        </div>
+        <span class="award-year">2024</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🥈</span>
+        <div class="award-info">
+          <h4>AIC 全球校园人工智能大赛</h4>
+          <span>全国二等奖</span>
+        </div>
+        <span class="award-year">2025</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🥉</span>
+        <div class="award-info">
+          <h4>睿抗机器人开发者大赛（CAIP 技能编程赛）</h4>
+          <span>全国三等奖</span>
+        </div>
+        <span class="award-year">2025</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🥉</span>
+        <div class="award-info">
+          <h4>蓝桥杯全国软件和信息技术专业人才大赛（C/C++ A 组）</h4>
+          <span>全国三等奖</span>
+        </div>
+        <span class="award-year">2025</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🥉</span>
+        <div class="award-info">
+          <h4>中国机器人及人工智能大赛（人工智能创新赛）</h4>
+          <span>全国三等奖</span>
+        </div>
+        <span class="award-year">2026</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🥉</span>
+        <div class="award-info">
+          <h4>中国大学生服务外包创新创业大赛</h4>
+          <span>全国三等奖</span>
+        </div>
+        <span class="award-year">2026</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🥉</span>
+        <div class="award-info">
+          <h4>睿抗机器人开发者大赛（CAIP 智海算法调优赛）</h4>
+          <span>全国三等奖</span>
+        </div>
+        <span class="award-year">2026</span>
+      </div>
+      <div class="award-item reveal">
+        <span class="award-medal">🎓</span>
+        <div class="award-info">
+          <h4>优秀学生奖学金 · 轮船招商奖学金</h4>
+          <span>校级荣誉</span>
+        </div>
+        <span class="award-year">2024 / 2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 联系我 ========== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box reveal">
+      <h2>联系我 🤝</h2>
+      <p>如果你想交流合作、聊聊技术，或者只是打个招呼，随时欢迎！</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:peichen1215@dlmu.edu.cn">📧 peichen1215@dlmu.edu.cn</a>
+        <a class="contact-link" href="https://github.com/PeiChen1215" target="_blank">🐙 GitHub</a>
+        <a class="contact-link" href="mailto:peichen1215@dlmu.edu.cn">📄 简历请邮件索取</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  © 2026 李鸿佑 · <a href="https://github.com/PeiChen1215" target="_blank">GitHub @PeiChen1215</a> · 用 ❤️ 制作
+</footer>
+
+<script>
+  // 导航栏滚动效果
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // 滚动淡入动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
